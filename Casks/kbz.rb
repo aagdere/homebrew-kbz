@@ -1,8 +1,8 @@
 cask "kbz" do
-  version "0.1.2947"
-  sha256 "0f50a2917114866cc7b695be68a6d7308cd1b66d1fe19320def840def0c5937e"
+  version "0.1.2950"
+  sha256 "a9c80923382e9bf295ac6b01db0e0cb108ab59f4976074c7390dd79755162c73"
 
-  url "https://github.com/aagdere/kbz/releases/download/v0.1.2947/Kibitz-#{version}-arm64-mac.zip"
+  url "https://github.com/aagdere/kbz/releases/download/v0.1.2950/Kibitz-#{version}-arm64-mac.zip"
   name "Kibitz"
   desc "Run coding agents on your repositories from your Mac and iPhone"
   homepage "https://github.com/aagdere/kbz"
