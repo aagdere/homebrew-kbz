@@ -151,7 +151,23 @@ press **"Skip"**, to keep the default. The sidebar, the home screen and the
 messages it sends into other sessions all use the name you choose. You can
 rename it any time in Settings → Assistant.
 
-## 7. Add projects
+## 7. Choose what agents may do
+
+The screen **"What may agents do without asking?"** asks once how much agents
+may do on their own. Pick one and press **"Continue"**:
+
+- **"Conservative"**: every click, keystroke and scroll on a computer asks you
+  first, and the sandbox asks for anything outside its rules.
+- **"Balanced"** (suggested): agents use computer control and Kibitz's own
+  tools without asking. Writes outside the project, unlisted network hosts,
+  secrets, sudo, destructive pushes and spending still ask.
+- **"Full access"**: no prompts at all; agents run with no sandbox.
+
+The preset sets both the computer-use approvals and the sandbox permissions.
+Settings → Permissions shows which one you are on (or Custom, once you change
+a single switch there) and switches it any time.
+
+## 8. Add projects
 
 The screen **"Add your projects"** explains how Kibitz is organized. Kibitz
 works in projects: a project is one GitHub repository, with its own
@@ -251,7 +267,7 @@ You can change it per project later. When no runner can take a check the
 repository requires, the merge setup says so, rather than letting the check
 wait forever.
 
-## 8. Add integrations (optional)
+## 9. Add integrations (optional)
 
 Kibitz works without any of these. Each is a card with its own steps. Connect
 one now, or later in Settings → Integrations, where the same cards stay.
@@ -267,7 +283,7 @@ one now, or later in Settings → Integrations, where the same cards stay.
 
 Press **"Continue"** when you are done, whether or not you connected any.
 
-## 9. Start working
+## 10. Start working
 
 Each project has an orchestrator. Tell it what you want changed, and it starts
 a worker on its own branch. The worker's pull request lands the way you chose
