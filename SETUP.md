@@ -55,17 +55,24 @@ Settings → This Mac, with nothing to reinstall.
 
 ## 2. Allow computer use
 
-The screen **"Let Kibitz see and use this Mac"** lists the three macOS
+The screen **"Let Kibitz see and use this Mac"** lists the two macOS
 permissions sessions need to take screenshots and click and type in your apps,
-each with its live state:
+each with its live state. They are the same two Claude, ChatGPT and Codex ask
+for, and Kibitz asks for nothing more:
 
 - **Screen Recording**, for screenshots. macOS applies it once Kibitz is quit
-  and reopened; setup comes back to this step.
+  and reopened; setup comes back to this step. On macOS 15 and later, the
+  first screenshot after that, and one now and then later, shows "Kibitz is
+  requesting to bypass the system private window picker and directly access
+  your screen and audio". Allow it: macOS asks this of every app that takes
+  screenshots without its window picker, Claude included, and an agent cannot
+  use the picker.
 - **Accessibility**, to click, type, press keys and scroll.
-- **App Management**, so apps Kibitz drives, such as its Chrome, can update
-  themselves without macOS stopping them ("'Kibitz' was prevented from
-  modifying apps on your Mac"). It shows "Not checked" when there is no app
-  to check it against.
+
+Kibitz never needs **App Management**. Its own updates replace only its own
+app, signed by the same developer, which macOS allows without it, and the
+browser it drives runs as its own app, so Chrome's updater is never Kibitz's
+(see [Mac computer use](mac-computer-use.md#what-kibitz-never-asks-for)).
 
 Press each button, such as **Open Accessibility settings**: Kibitz asks
 macOS first, so it is already in the list of the System Settings pane that
