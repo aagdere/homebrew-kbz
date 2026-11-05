@@ -111,13 +111,11 @@ where you left off.
    projects a name, or press **"Skip"** to keep "Assistant".
 7. **Choose what agents may do.** Pick **"Conservative"**, **"Balanced"** or
    **"Full access"** once; Settings → Permissions switches it later.
-8. **Add projects.** Search **"Repository"** for one of your repositories,
-   choose **"How changes land"**, and add it. Each repository becomes a
-   project with its own orchestrator. Kibitz then checks that it can land
-   work there: that your GitHub sign-in can see the repository and push to
-   it, and that your organization allows it. Each missing permission comes
-   with its fix. Add more with **"Add another repository"**, or none with
-   **"Add projects later"**.
+8. **Add projects.** Press **"Choose a folder…"** and choose a folder on
+   your Mac: it becomes a project, named after the folder, with its own
+   orchestrator. Any folder works, a git repository or not; a GitHub
+   repository's issues and pull requests are used there. Add more with
+   **"Add another folder…"**, or none with **"Add projects later"**.
 9. **Add integrations (optional).** Push notifications, phone calls,
    1Password and Gmail. Skip them now if you like: they stay in
    Settings → Integrations.
@@ -187,9 +185,9 @@ Rename it any time in Settings → Assistant.
 ### Adding projects
 
 Press **"Add project"**, the folder button beside the project list in the
-sidebar. It opens the same repository picker as setup. Each project is one
-repository, with its own orchestrator and its own settings. Kibitz works in
-its own copy of each repository on your Mac.
+sidebar, and choose a folder: that folder is the project, with its own
+orchestrator and its own settings. A git repository, a folder of its
+checkouts, or a plain folder all work, and nothing else is asked.
 
 ### Models and effort
 
@@ -322,4 +320,4 @@ app's sidebar, and what you saw.
 
 ---
 
-This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.3614.
+This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.3625.

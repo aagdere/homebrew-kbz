@@ -170,92 +170,63 @@ a single switch there) and switches it any time.
 ## 8. Add projects
 
 The screen **"Add your projects"** explains how Kibitz is organized. Kibitz
-works in projects: a project is one GitHub repository, with its own
-orchestrator. You tell a project's orchestrator what to change, and it opens a
-pull request for every change. Kibitz works in a copy of each repository on
-this Mac.
+works in projects: a project is a folder on this Mac, with its own
+orchestrator. You tell a project's orchestrator what to change, and it shows
+you each change before it lands there.
 
-You can add one repository here, several, or none:
+Adding a project is choosing its folder, and nothing more:
 
-1. Search **"Repository"** for one of yours, or type `owner/name` or its
-   GitHub address. The list holds your own repositories, ones you collaborate
-   on, and your organizations' repositories, most recently changed first;
-   **"Owner"** narrows it to one account or organization.
-2. Choose **"How changes land"** (see below).
-3. Press the button to add the repository. Kibitz clones it and makes it a
-   project with the repository's name. Picking a repository a project already
-   works in reuses that project.
-4. Press **"Add another repository"** to add the next one the same way, or
-   **"Continue"** when you have added them all.
+1. Press **"Choose a folder…"**. The Mac's own folder dialog opens; choose the
+   folder. (When the app is connected to a Kibitz on another computer, you
+   choose from that computer's folders instead.)
+2. The folder is now a project, named after the folder. One line says so;
+   rename it later in the project's settings.
+3. Press **"Add another folder…"** for the next one, or **"Continue"** when
+   you have added them all.
 
-To start with no project, press **"Add projects later"** instead of picking
-one. Once you have added some, the same button reads "Continue with" and how
-many you have.
+Any folder works:
+
+- **A git repository**: Kibitz notices it by itself. When its remote is on
+  GitHub, the project's issues and pull requests are that repository's; no
+  GitHub list or sign-in check is part of adding it.
+- **A folder of one repository's checkouts or worktrees**: lanes start from
+  the checkout that tracks the repository's default branch.
+- **A plain folder**, such as a folder of scripts: Kibitz keeps a private
+  history of it, shows each change as a diff, and lands it straight into the
+  folder. The step says so under the confirmation.
+
+Choosing a folder a project already works in opens that project instead of
+adding a second one.
+
+To start with no project, press **"Add projects later"** instead. Once you
+have added some, the same button reads "Continue with" and how many you have.
 
 After setup, add a project at any time with **"Add project"**: the folder
 button beside the project list in the sidebar, or **"Add project…"** in its
-**"Project actions"** menu (the … button). It opens the same repository picker
-as this step.
+**"Project actions"** menu (the … button). The folder dialog opens at once;
+cancel it and nothing changes. Once the folder is added, **"Open its
+orchestrator"** starts working there.
 
-When an organization you belong to shows none of its repositories, the step
-says why under the list:
+### Later, in the project's settings
 
-- **Single sign-on**: the organization uses SAML SSO and your GitHub sign-in
-  is not authorized for it. Open the GitHub CLI's page in your GitHub settings
-  (the step's **"Open GitHub"** button), press **Authorize** beside the
-  organization, then come back to the step.
-- **App approval**: the organization restricts which apps may read its data
-  and has not approved the GitHub CLI, which Kibitz signs in with. Press
-  **Request** beside the organization on the same page, or ask one of its
-  owners to approve it.
+Nothing about GitHub or merging is asked while you add a project. When it
+matters, the project says so:
 
-Typing `owner/name` still works for any repository you can clone.
-
-### Can Kibitz land work there?
-
-Once the repository is added, the step checks that the GitHub sign-in Kibitz
-pushes, opens pull requests and merges with can actually land work in it. Each check shows as passed, missing (with its fix), or not checked
-when an earlier one decides it or it does not apply:
-
-- **Signed in to GitHub**: Kibitz still has a GitHub sign-in on this Mac.
-  Missing: connect GitHub again in step 4.
-- **Single sign-on**: when the organization requires SAML SSO, your sign-in is
-  authorized for it. Missing: press **"Open GitHub"** (the **Authorize for
-  SSO** page GitHub names), sign in to the organization's identity provider,
-  press **Authorize**, then **"Check again"**.
-- **App approved by the organization**: the organization's third-party access
-  restrictions do not block the GitHub CLI, which Kibitz signs in with.
-  Missing: ask an org owner to approve the app. Press **Request** beside the
-  organization on the page **"Open GitHub"** shows; an owner then approves it
-  in the organization's own GitHub settings, under **Third-party access**.
-- **Repository visible**: GitHub shows the repository to your account.
-  Missing: check the name, or ask one of its admins to add you.
-- **Push access**: your role there is Write, Maintain or Admin. Missing ("you
-  have read-only access", or the repository is archived): ask an admin of the
-  repository for the Write or Maintain role, or pick another repository.
-- **Trial branch push**: a `git push --dry-run` of a branch from the copy on
-  this Mac is accepted. A dry run sends nothing: no branch or pull request is
-  left behind. It is not checked for an empty repository.
-
-**"Continue"** and **"Add another repository"** wait until every check
-passes. If you want to go on anyway,
-tick **"Continue anyway"**: Kibitz still can't push or open pull requests
-there until the fix is made. You can run the same checks later from the
-project's menu (**GitHub access in** and the project's name), which tries the
-push from that project's own folder. A repository added after setup with
-**"Add project"** is checked the same way.
-
-Once a repository is added, the wizard offers **"Set up automatic merges…"**:
-it shows exactly what Kibitz would change in the repository so its pull
-requests merge once they pass, and changes nothing until you press **"Approve
-and set up"**. You can skip this now and do it later from the project.
+- **GitHub access**: the project's menu has **GitHub access in** and the
+  project's name, which checks that the GitHub sign-in Kibitz pushes, opens
+  pull requests and merges with can land work there, each missing permission
+  with its fix.
+- **Automatic merges**: the first time a lane is ready to land, Kibitz asks
+  how its pull requests should merge there, and shows exactly what it would
+  change in the repository before you approve.
 
 ### How changes land
 
-Every change a worker makes arrives as a pull request. This setting decides
-what has to pass before Kibitz merges it:
+Every change a worker makes arrives as a pull request. The project's
+**How this lands** setting decides what has to pass before Kibitz merges it. A new project uses the default, self-hosted runners; change it in the
+project's settings:
 
-- **"Local verify only"** (the wizard's choice on a single Mac): no CI. The
+- **"Local verify only"** (the right choice on a single Mac): no CI. The
   server runs the repository's own checks on this Mac and merges on green.
   Nothing more is needed.
 - **"GitHub-hosted runners"**: pull requests merge once their CI passes on
@@ -286,21 +257,21 @@ Press **"Continue"** when you are done, whether or not you connected any.
 ## 10. Start working
 
 Each project has an orchestrator. Tell it what you want changed, and it starts
-a worker on its own branch. The worker's pull request lands the way you chose
-in step 7, and you see each step in the session.
+a worker on its own branch. The worker's change lands the way the project's
+**How this lands** says, and you see each step in the session.
 
 Press **"Open the orchestrator"** and ask for something small first, such as
 "Add a short description to the README". The wizard closes, and the
 orchestrator's session opens. With several projects it opens the first one
 you added; each of the others has its own orchestrator in the sidebar.
 
-If you added no project in step 7, the screen says where to add one, and
+If you added no project in step 8, the screen says where to add one, and
 **"Finish setup"** closes the wizard.
 
 ## After setup
 
 - **"Add project"** (the folder button beside the sidebar's project list): a
-  repository as a new project, with its own orchestrator.
+  folder as a new project, with its own orchestrator.
 - Settings → Connection: the server this app talks to.
 - Settings → This Mac: this Mac's role, and the permissions computer use needs.
 - Settings → Assistant: your assistant's name.
