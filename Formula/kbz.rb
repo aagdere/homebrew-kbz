@@ -1,19 +1,19 @@
 class Kbz < Formula
   desc "Run coding agents on your repositories, from your Mac, iPhone and devices"
   homepage "https://github.com/aagdere/kbz"
-  version "0.1.3642"
+  version "0.1.3644"
   license :cannot_represent
 
   depends_on :macos
 
   on_macos do
     on_arm do
-      url "https://github.com/aagdere/kbz/releases/download/v0.1.3642/kbz-0.1.3642-darwin-arm64.tar.gz"
-      sha256 "96f42496bcd0c2cac94e09888bb9717a272bd82b275589b3254990baf8133ed9"
+      url "https://github.com/aagdere/kbz/releases/download/v0.1.3644/kbz-0.1.3644-darwin-arm64.tar.gz"
+      sha256 "92b86896f7d4dc2f415a202b1caa1ceb635a279736eee0560f9cf176bd54ed37"
     end
     on_intel do
-      url "https://github.com/aagdere/kbz/releases/download/v0.1.3642/kbz-0.1.3642-darwin-x64.tar.gz"
-      sha256 "cda4704e47be02b7c97616ba8b10b9cd2d572730e28cc763182d3b2cf9d60fcc"
+      url "https://github.com/aagdere/kbz/releases/download/v0.1.3644/kbz-0.1.3644-darwin-x64.tar.gz"
+      sha256 "1d7514f025c5876f30b228335af9bdcd7077866794fa38b98dca9e3cac9604f5"
     end
   end
 
