@@ -218,6 +218,8 @@ Usage: kbz <command>
                               mouse (no CH9329 adapter needed), or stop that
   gadget status               show how that is set up
   role                        show what this machine does
+  update                      update a connected device's kbz now (it also
+                              updates by itself when no one is controlling it)
   run                         run it (the kbz service does this)
   version                     show the installed version
 
@@ -320,4 +322,4 @@ app's sidebar, and what you saw.
 
 ---
 
-This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.3987.
+This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.4012.
