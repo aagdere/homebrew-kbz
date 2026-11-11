@@ -216,6 +216,9 @@ Usage: kbz <command>
   unpair                      forget this computer controller's pairing
   gadget enable|disable       make this Pi itself the computer's USB keyboard and
                               mouse (no CH9329 adapter needed), or stop that
+  gadget recover              build it again and reset the Pi's USB device port,
+                              when the computer stopped taking its keyboard and
+                              mouse (Kibitz does this by itself when asked)
   gadget status               show how that is set up
   role                        show what this machine does
   update                      update a connected device's kbz now (it also
@@ -322,4 +325,4 @@ app's sidebar, and what you saw.
 
 ---
 
-This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.4082.
+This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.4087.
