@@ -140,6 +140,10 @@ Then pick **"The model every session starts on"** and press **"Continue"**.
 The wizard suggests one, a Claude Sonnet where it can. You can change it, and
 choose one per kind of session, in Settings → Models & effort schedule.
 
+Not ready to sign in yet? Press **"Skip for now"**: setup goes on to the
+next steps, including what agents may do, and sessions start once you sign
+in to a provider in Settings → Models & effort schedule.
+
 ## 6. Name your assistant
 
 Your assistant is the one conversation that works across every project: ask it
