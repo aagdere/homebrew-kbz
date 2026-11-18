@@ -33,6 +33,7 @@ Mac and talk to it from the desktop app.
 - [Using Kibitz](#using-kibitz)
 - [The kbz command](#the-kbz-command)
 - [Privacy](#privacy)
+- [Verify your download](#verify-your-download)
 - [Updating, uninstalling and your data](#updating-uninstalling-and-your-data)
 - [Troubleshooting](#troubleshooting)
 - [Getting help](#getting-help)
@@ -261,6 +262,60 @@ service.
 - **You approve what matters.** Risky steps, outgoing messages and sign-ins
   wait for your answer on a card.
 
+## Verify your download
+
+Every release lists each file's SHA-256 in `SHA256SUMS` and signs that
+list in the CI run that built it. Beside the files, each release carries:
+
+- `SHA256SUMS.sigstore.json`: a [Sigstore](https://www.sigstore.dev) signature. Its
+  certificate names the workflow run and the commit that built the release,
+  and Sigstore's public transparency log keeps a record of it.
+- `SHA256SUMS.asc`: the same list signed with the apt repository's key.
+- `provenance.intoto.json`: the commit and the CI runs that built every file
+  ([SLSA provenance](https://slsa.dev/provenance/v1)).
+- `*.cdx.json`: bills of materials ([CycloneDX](https://cyclonedx.org)) for the app, the server
+  and the `kbz` package: every open-source component each one carries, with
+  its version, licence and checksum.
+
+Each release's notes link its files' [VirusTotal](https://www.virustotal.com) scans.
+
+The install line checks the app's checksum and signature for you. To check
+a file you downloaded yourself, fetch the checksums and their signatures into
+the same folder (for an older release, use its own download address,
+`releases/download/v<version>`):
+
+```bash
+base=https://github.com/aagdere/kbz/releases/latest/download
+curl -fsSL -O "$base/SHA256SUMS" -O "$base/SHA256SUMS.asc" -O "$base/SHA256SUMS.sigstore.json"
+```
+
+1. **Check the file against the list.** It prints the file's name and `OK`,
+   and `FAILED` for a file that was changed:
+
+   ```bash
+   shasum -a 256 --ignore-missing -c SHA256SUMS     # on a Mac
+   sha256sum --ignore-missing -c SHA256SUMS        # on Linux
+   ```
+
+2. **Check that Kibitz's release workflow signed the list**, with
+   [cosign](https://docs.sigstore.dev) (`brew install cosign`). It prints `Verified OK`:
+
+   ```bash
+   cosign verify-blob SHA256SUMS --bundle SHA256SUMS.sigstore.json \
+     --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+     --certificate-identity https://github.com/aagdere/kibitz/.github/workflows/packages.yml@refs/heads/main
+   ```
+
+   Or, with GnuPG, against the key the apt repository uses:
+
+   ```bash
+   curl -fsSL -O https://aagdere.github.io/kbz/kibitz-archive-keyring.gpg
+   gpgv --keyring ./kibitz-archive-keyring.gpg SHA256SUMS.asc SHA256SUMS
+   ```
+
+A file is genuine only when both steps pass: its line in `SHA256SUMS`
+matches it, and `SHA256SUMS` carries a good signature.
+
 ## Updating, uninstalling and your data
 
 **Updating.** The app updates itself. The command-line install updates with
@@ -337,4 +392,4 @@ app's sidebar, and what you saw.
 
 ---
 
-This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.4610.
+This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.4630.
