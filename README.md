@@ -223,6 +223,12 @@ Usage: kbz <command>
   role                        show what this machine does
   update                      update a connected device's kbz now (it also
                               updates by itself when no one is controlling it)
+  uninstall                   remove Kibitz from this machine: the app, its
+                              background services, the server, this command, its
+                              caches and logs; it asks before deleting your data
+  uninstall --delete-data [--export <file> | --no-export] [--yes]
+                              remove your data too (sessions, projects, settings,
+                              saved secrets), after exporting it when asked
   run                         run it (the kbz service does this)
   version                     show the installed version
 
@@ -265,26 +271,32 @@ service.
 | What | Where |
 | --- | --- |
 | Settings, sessions, projects, the vault | `~/.glm-console` |
-| The server the app installed | `~/Library/Application Support/Kibitz/server` |
+| The app's own settings | `~/Library/Application Support/kibitz-desktop` |
+| The server the app installed | `~/Library/Application Support/kibitz-desktop/server` |
 | Its background service | `~/Library/LaunchAgents/app.kibitz.server.plist` |
-| The server's log | `~/Library/Logs/Kibitz/server.log` |
+| The app's and the server's logs | `~/Library/Logs/kibitz-desktop` |
 | The command-line install's log | `$(brew --prefix)/var/log/kbz.log` |
+| On Linux: the package, its data | `/usr/lib/kbz`, `/var/lib/kibitz` |
 
-**Uninstalling.** Quit Kibitz, then stop its server and remove the app:
+**Uninstalling.** One step removes Kibitz: the app, its background services,
+the server, the `kbz` command, and its caches and logs. In the app, choose
+Remove Kibitz… in the Kibitz menu, or in Settings, This Mac. In a terminal:
 
 ```bash
-launchctl bootout gui/$(id -u)/app.kibitz.server
-launchctl bootout gui/$(id -u)/app.kibitz.server.logrotate
-rm -f ~/Library/LaunchAgents/app.kibitz.server.plist ~/Library/LaunchAgents/app.kibitz.server.logrotate.plist
-brew uninstall --zap --cask kbz    # or drag Kibitz from Applications to the Trash
+kbz uninstall                # asks before deleting your data, and offers an export
+sudo kbz uninstall           # on Linux, and for the Mac's administrator-owned services
 ```
 
-For the command-line install: `brew services stop kbz`, then
-`brew uninstall kbz`.
+Your data (`~/.glm-console`: sessions, projects, settings and the vault's saved
+secrets) stays unless you choose to delete it too, so installing Kibitz again
+picks up where you left off. Deleting it first exports it to a `.tar.gz`, if
+you want, revokes your paired phones and devices, and removes the Keychain
+items and tokens Kibitz created. Without questions:
+`kbz uninstall --yes --delete-data --export ~/kibitz.tar.gz`.
 
-Your data stays in `~/.glm-console` until you delete it. It holds your
-vault and your sessions, so keep it if you may come back:
-`rm -rf ~/.glm-console` removes it for good.
+`brew uninstall --zap --cask kbz` and `sudo apt purge kbz` remove the
+same files, data included; `brew uninstall` and `sudo apt remove kbz`
+keep the data.
 
 ## Troubleshooting
 
@@ -325,4 +337,4 @@ app's sidebar, and what you saw.
 
 ---
 
-This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.4574.
+This tap holds the recipes only, `Casks/kbz.rb` and `Formula/kbz.rb`. The release files are in [aagdere/kbz](https://github.com/aagdere/kbz/releases). This page was written for Kibitz 0.1.4604.

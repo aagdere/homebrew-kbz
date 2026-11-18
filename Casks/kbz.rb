@@ -1,8 +1,8 @@
 cask "kbz" do
-  version "0.1.4574"
-  sha256 "595bafd22c02dbe9e22d0c742af5df4e55d46a7c1e0868f8803dde63c007a40c"
+  version "0.1.4604"
+  sha256 "2737df47e812c103733330a2f520912392d115157b77ae7d49209293281f8349"
 
-  url "https://github.com/aagdere/kbz/releases/download/v0.1.4574/Kibitz-#{version}-arm64-mac.zip"
+  url "https://github.com/aagdere/kbz/releases/download/v0.1.4604/Kibitz-#{version}-arm64-mac.zip"
   name "Kibitz"
   desc "Run coding agents on your repositories from your Mac and iPhone"
   homepage "https://github.com/aagdere/kbz"
@@ -14,14 +14,48 @@ cask "kbz" do
 
   app "Kibitz.app"
 
-  uninstall quit: "dev.aris.kibitz"
+  # #2560: the same set kbz uninstall removes (docs/uninstall.md)
+  uninstall quit:      "dev.aris.kibitz",
+            launchctl: [
+              "app.kibitz.server",
+              "app.kibitz.server.logrotate",
+              "dev.aris.kibitz.server",
+              "dev.aris.kibitz.server.logrotate",
+            ],
+            delete:    [
+              "~/Library/Application Support/kibitz-desktop/server",
+              "~/Library/Application Support/Kibitz/server",
+              "~/.glm-console/helpers",
+              "~/Library/Application Support/kibitz-desktop/Kibitz Browser.app",
+              "~/Library/Application Support/Kibitz/Kibitz Browser.app",
+              "~/Library/Application Support/kibitz-desktop/Kibitz Browser.version",
+              "~/Library/Application Support/Kibitz/Kibitz Browser.version",
+            ]
 
-  zap trash: [
-    "~/Library/Application Support/Kibitz",
-    "~/Library/Logs/Kibitz",
-    "~/Library/Preferences/dev.aris.kibitz.plist",
-    "~/Library/Saved Application State/dev.aris.kibitz.savedState",
-  ]
+  zap launchctl: [
+        "app.kibitz.server",
+        "app.kibitz.server.logrotate",
+        "dev.aris.kibitz.server",
+        "dev.aris.kibitz.server.logrotate",
+      ],
+      script:    { executable: "/bin/sh", args: ["-c", "/usr/bin/security delete-generic-password -s 'kibitz-desktop Safe Storage' >/dev/null 2>&1; /usr/bin/security delete-generic-password -s 'Kibitz Safe Storage' >/dev/null 2>&1; true"], must_succeed: false },
+      trash:     [
+        "~/Library/Logs/kibitz-desktop",
+        "~/Library/Logs/Kibitz",
+        "~/Library/Caches/dev.aris.kibitz",
+        "~/Library/Caches/dev.aris.kibitz.ShipIt",
+        "~/Library/Caches/kibitz-desktop",
+        "~/Library/Caches/Kibitz",
+        "~/Library/Caches/kibitz-input",
+        "~/Library/HTTPStorages/dev.aris.kibitz",
+        "~/Library/Saved Application State/dev.aris.kibitz.savedState",
+        "~/Library/Preferences/dev.aris.kibitz.plist",
+        "~/Library/Preferences/com.kibitz.connector-browser.plist",
+        "~/Library/Application Support/kibitz-desktop",
+        "~/Library/Application Support/Kibitz",
+        "~/Library/Application Support/glm-console-desktop",
+        "~/.glm-console",
+      ]
 
   caveats <<~EOS
     Open Kibitz to set it up: it installs the Kibitz server on this Mac, or
